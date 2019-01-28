@@ -1,0 +1,65 @@
+n4d-clientvars (0.7) bionic; urgency=medium
+
+  * First bionic release
+
+ -- Hector Garcia Huerta <hectorgh@gmail.com>  Mon, 28 Jan 2019 10:19:26 +0100
+
+n4d-clientvars (0.6) xenial; urgency=high
+
+  * First Xenial release
+
+ -- Hector Garcia Huerta <hectorgh@gmail.com>  Thu, 18 Feb 2016 16:55:05 +0100
+
+n4d-clientvars (0.5) trusty; urgency=high
+
+  * Upload to trusty
+
+ -- Raul Rodrigo Segura <raurodse@gmail.com>  Thu, 13 Nov 2014 12:49:12 +0100
+
+n4d-clientvars (0.4.2) precise; urgency=high
+
+  * Shielded MOUNT_SOURCES variable. Server always rules over local changes now.
+
+ -- Hector Garcia Huerta <hectorgh@gmail.com>  Tue, 22 Oct 2013 08:43:47 +0200
+
+n4d-clientvars (0.4.1) precise; urgency=low
+
+  * Dummy upgrade
+
+ -- Hector Garcia Huerta <cless@anubis.lliurex.fs>  Tue, 04 Jun 2013 14:48:36 +0200
+
+n4d-clientvars (0.4) precise; urgency=low
+
+  * Fixed mnt variable computation
+
+ -- Hector Garcia Huerta <cless@anubis.lliurex.fs>  Tue, 04 Jun 2013 12:06:44 +0200
+
+n4d-clientvars (0.3) precise; urgency=low
+
+  * Fixed startup
+
+ -- Hector Garcia Huerta <cless@anubis.lliurex.fs>  Thu, 02 May 2013 11:06:49 +0200
+
+n4d-clientvars (0.2.2) precise; urgency=low
+
+  * Dummy upgrade
+
+ -- Hector Garcia Huerta <cless@anubis.lliurex.fs>  Thu, 02 May 2013 10:24:43 +0200
+
+n4d-clientvars (0.2.1) precise; urgency=low
+
+  * Fixed postinst
+
+ -- Hector Garcia Huerta <hectorgh@gmail.com>  Thu, 02 May 2013 09:13:03 +0200
+
+n4d-clientvars (0.2) precise; urgency=low
+
+  * Added postinst to load plugin
+
+ -- Hector Garcia Huerta <hectorgh@gmail.com>  Thu, 02 May 2013 08:58:39 +0200
+
+n4d-clientvars (0.1) precise; urgency=low
+
+  * Initial release.
+
+ -- Hector Garcia Huerta <hectorgh@gmail.com>  Thu, 02 May 2013 08:48:44 +0200

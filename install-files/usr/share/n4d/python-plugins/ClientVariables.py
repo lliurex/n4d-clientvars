@@ -1,12 +1,15 @@
-import xmlrpclib
+import xmlrpc.client
+import ssl
 
+import n4d.server.core
+import n4d.responses
 
 
 class ClientVariables:
 	
 	def __init__(self):
 		
-		pass
+		self.core=n4d.server.core.Core.get_core()
 		
 	#def init
 	
@@ -16,18 +19,17 @@ class ClientVariables:
 			try:
 				self.startup(None)
 			except Exception as e:
-				print e
+				print(e)
 		
 	#def n4d_cron
 	
 	def startup(self,options):
 
-
-		if objects['VariablesManager'].get_variable('REMOTE_VARIABLES_SERVER') is None:
-			objects['VariablesManager'].init_variable('REMOTE_VARIABLES_SERVER')
-			
+		if not self.core.variable_exists("REMOTE_VARIABLES_SERVER")["return"]:
+			self.core.set_variable("REMOTE_VARIABLES_SERVER","server",{"info":"N4d Remote server"})
+		
 		if objects['VariablesManager'].get_variable('CLIENT_INTERNAL_INTERFACE') is None:
-			print objects['VariablesManager'].init_variable('CLIENT_INTERNAL_INTERFACE')
+			self.core.set_variable('CLIENT_INTERNAL_INTERFACE',"WIP",{"info":"Client network interface"})
 	
 		print("\t* Updating MOUNT_SOURCES variable... " + str(self.update_mnt_variable()[0]))
 
@@ -39,21 +41,14 @@ class ClientVariables:
 		
 		try:
 
-			c=xmlrpclib.ServerProxy("https://server:9779")
-			#HACK FOR TESTING
-			#c=xmlrpclib.ServerProxy("https://localhost:9779")
-			
-			dic=c.get_shared_folders("","NetFoldersManager")
+			context=ssl._create_unverified_context()
+			c = xmlrpc.client.ServerProxy('https://server:9779',context=context,allow_none=True)
 
-			'''
-			try:
-				orig=objects["VariablesManager"].get_variable("MOUNT_SOURCES")
-			except Exception as e:
-				#hack for testingi
-				print e
-				#orig=c.get_variable("","VariablesManager","MOUNT_SOURCES")
-				return [False,str(e)]
-			'''
+			#WIP 
+			#dic=c.get_shared_folders("","NetFoldersManager")["return"]
+			# for testing purposes we are connecting to a llx19 server
+			dic=c.get_shared_folders("","NetFoldersManager")
+			
 			mnt_var={}
 			if dic==None:
 				mnt_var={}
@@ -61,7 +56,7 @@ class ClientVariables:
 				try:
 					for item in dic:
 						if type(dic[item])==type({}):
-							if not dic[item].has_key("dst") or not dic[item].has_key("fstype"):
+							if "dst" not in dic[item] or "fstype" not in dic[item]:
 								pass
 							else:
 								mnt_var[item]=dic[item]
@@ -69,49 +64,32 @@ class ClientVariables:
 				except:
 					mnt_var={}
 					
-
-			#new_dic=dict(dic.items()+mnt_var.items())
-			
 			new_dic=mnt_var
-			
 			if len(new_dic)>0:
-			
-				if not objects["VariablesManager"].set_variable("MOUNT_SOURCES",new_dic)[0]:
-					objects["VariablesManager"].add_variable("MOUNT_SOURCES",new_dic,None,"N4D mount variable",["ClientVariables"])
-			
+				self.core.set_variable("MOUNT_SOURCES",new_dic)
 			else:
 				
 				try:
-					orig=objects["VariablesManager"].get_variable("MOUNT_SOURCES")
+					orig=self.core.get_variable("MOUNT_SOURCES")["return"]
 					new_dic={}
 					
 					for item in orig:
 						if type(orig[item])==type({}):
-							if not orig[item].has_key("dst") or not orig[item].has_key("fstype"):
+							if "dst" not in dic[item] or "fstype" not in dic[item]:
 								pass
 							else:
 								new_dic[item]=orig[item]
-					
-					
-					
-					
-					objects["VariablesManager"].set_variable("MOUNT_SOURCES",new_dic)[0]
-					
+					self.core.set_variable("MOUNT_SOURCES",new_dic)
 					
 				except:
 					mnt_var={}
-					objects["VariablesManager"].set_variable("MOUNT_SOURCES",mnt_var)[0]
-					
-					return[False,str(e)]
-				
-				
-				
+					self.core.set_variable("MOUNT_SOURCES",mnt_var)[0]
+					return n4d.responses.build_failed_call_response()
 			
-			return [True,""]
+			return n4d.responses.build_successful_call_response()
 		
 		except Exception as e:
-			print e
-			return [False,str(e)]
+			return n4d.responses.build_failed_call_response()
 				
 				
 		

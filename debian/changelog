@@ -1,3 +1,9 @@
+n4d-clientvars (0.10.1) focal; urgency=medium
+
+  * Removing python-llxvars dependency
+
+ -- Hector Garcia Huerta <hectorgh@gmail.com>  Mon, 08 Feb 2021 14:41:56 +0100
+
 n4d-clientvars (0.10) focal; urgency=medium
 
   * First focal release

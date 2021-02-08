@@ -9,7 +9,7 @@ Homepage: http://www.lliurex.net
 Package: n4d-clientvars
 Architecture: all
 Pre-depends: n4d
-Depends: ${shlibs:Depends}, ${misc:Depends}, python-llxvars
+Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: N4D plugin to configure server clients
  This plugin configures client variables
  

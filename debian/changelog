@@ -1,3 +1,10 @@
+n4d-clientvars (0.11) focal; urgency=medium
+
+  * added get_internal_interface function
+  * added python3-llxnet dependency
+
+ -- Hector Garcia Huerta <hectorgh@gmail.com>  Tue, 09 Feb 2021 10:16:35 +0100
+
 n4d-clientvars (0.10.1) focal; urgency=medium
 
   * Removing python-llxvars dependency

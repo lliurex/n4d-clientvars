@@ -1,6 +1,8 @@
 import xmlrpc.client
 import ssl
 
+import lliurex.net
+
 import n4d.server.core
 import n4d.responses
 
@@ -28,14 +30,38 @@ class ClientVariables:
 		if not self.core.variable_exists("REMOTE_VARIABLES_SERVER")["return"]:
 			self.core.set_variable("REMOTE_VARIABLES_SERVER","server",{"info":"N4d Remote server"})
 		
-		if objects['VariablesManager'].get_variable('CLIENT_INTERNAL_INTERFACE') is None:
-			self.core.set_variable('CLIENT_INTERNAL_INTERFACE',"WIP",{"info":"Client network interface"})
+		if not self.core.variable_exists("CLIENT_INTERNAL_INTERFACE")["return"]:
+			iface=self.get_internal_interface()
+			if iface!=None:
+				self.core.set_variable('CLIENT_INTERNAL_INTERFACE',iface,{"info":"Client network interface"})
 	
 		print("\t* Updating MOUNT_SOURCES variable... " + str(self.update_mnt_variable()[0]))
-
-
-		
+	
 	#def startup
+	
+	def get_internal_interface(self):
+		
+		try:
+			context=ssl._create_unverified_context()
+			c = xmlrpc.client.ServerProxy('https://server:9779',context=context,allow_none=True)
+			ret=c.get_variable("INTERNAL_NETWORK")
+			if ret["status"]!=0:
+				raise Exception()
+			internal_network=ret["return"]
+			ret=c.get_variable("INTERNAL_MASK")
+			if ret["status"]!=0:
+				raise Exception()
+			internal_mask=ret["return"]
+			network=str(internal_network)+"/"+str(internal_mask)
+			
+			for dinfo in lliurex.net.get_devices_info():
+				if lliurex.net.is_ip_in_range(dinfo["ip"],network):
+					return dinfo["name"]
+			
+		except:
+			return None
+		
+	#def get_internal_interface
 	
 	def update_mnt_variable(self):
 		
@@ -45,9 +71,15 @@ class ClientVariables:
 			c = xmlrpc.client.ServerProxy('https://server:9779',context=context,allow_none=True)
 
 			#WIP 
-			#dic=c.get_shared_folders("","NetFoldersManager")["return"]
-			# for testing purposes we are connecting to a llx19 server
-			dic=c.get_shared_folders("","NetFoldersManager")
+			ret=c.get_shared_folders("","NetFoldersManager")
+			
+			if ret["status"]!=0:
+				raise Exception()
+			
+			dic=ret["return"]
+			
+			#for testing purposes we are connecting to a llx19 server
+			#dic=c.get_shared_folders("","NetFoldersManager")
 			
 			mnt_var={}
 			if dic==None:
@@ -83,7 +115,7 @@ class ClientVariables:
 					
 				except:
 					mnt_var={}
-					self.core.set_variable("MOUNT_SOURCES",mnt_var)[0]
+					self.core.set_variable("MOUNT_SOURCES",mnt_var)
 					return n4d.responses.build_failed_call_response()
 			
 			return n4d.responses.build_successful_call_response()

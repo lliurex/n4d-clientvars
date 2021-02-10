@@ -29,6 +29,9 @@ class ClientVariables:
 
 		if not self.core.variable_exists("REMOTE_VARIABLES_SERVER")["return"]:
 			self.core.set_variable("REMOTE_VARIABLES_SERVER","server",{"info":"N4d Remote server"})
+			
+		if self.core.get_variable("REMOTE_VARIABLES_SERVER")==None:
+			self.core.set_variable("REMOTE_VARIABLES_SERVER","server",{"info":"N4d Remote server"})
 		
 		if not self.core.variable_exists("CLIENT_INTERNAL_INTERFACE")["return"]:
 			iface=self.get_internal_interface()

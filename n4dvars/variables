@@ -5,6 +5,6 @@
     }, 
     "REMOTE_VARIABLES_SERVER": {
         "description": "Remote server for variables resolution", 
-        "value": null
+        "value": "server"
     }
 }

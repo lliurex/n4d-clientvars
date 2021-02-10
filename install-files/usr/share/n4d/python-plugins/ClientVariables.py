@@ -37,8 +37,14 @@ class ClientVariables:
 			iface=self.get_internal_interface()
 			if iface!=None:
 				self.core.set_variable('CLIENT_INTERNAL_INTERFACE',iface,{"info":"Client network interface"})
-	
-		print("\t* Updating MOUNT_SOURCES variable... " + str(self.update_mnt_variable()[0]))
+		
+		status=False
+		ret=self.update_mnt_variable()
+		if ret["status"]==0:
+			status=True
+		print("\t* Updating MOUNT_SOURCES variable... %s"%status)
+		if not status:
+			self.core.pprint("ClientVariables",ret["msg"])
 	
 	#def startup
 	

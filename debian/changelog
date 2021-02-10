@@ -1,3 +1,9 @@
+n4d-clientvars (0.12.1) focal; urgency=medium
+
+  * Fixed updating mount sources log
+
+ -- Hector Garcia Huerta <hectorgh@gmail.com>  Wed, 10 Feb 2021 11:46:03 +0100
+
 n4d-clientvars (0.12) focal; urgency=medium
 
   * forcing REMOTE_VARIABLES_SERVER to server

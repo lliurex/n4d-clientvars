@@ -1,18 +1,10 @@
 {
     "CLIENT_INTERNAL_INTERFACE": {
-        "function": "lliurex.variables.client_internal_interface.init", 
-        "packages": [
-            "n4d-clientvars"
-        ], 
         "description": "Interface connected to the server network", 
         "value": null
     }, 
     "REMOTE_VARIABLES_SERVER": {
-        "function": "lliurex.variables.remote_variables_server.init", 
-        "packages": [
-            "n4d-clientvars"
-        ], 
         "description": "Remote server for variables resolution", 
-        "value": null
+        "value": "server"
     }
 }

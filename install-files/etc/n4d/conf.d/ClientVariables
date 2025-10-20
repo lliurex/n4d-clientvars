@@ -1,6 +1,0 @@
-[SETUP]
-type=python
-path=ClientVariables.py
-class=ClientVariables
-[METHODS]
-update_mnt_variable=adm,admins

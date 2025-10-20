@@ -1,3 +1,9 @@
+n4d-clientvars (0.13) noble; urgency=medium
+
+  *  First Noble version
+
+ -- Raul Rodrigo Segura <raurodse@gmail.com>  Mon, 20 Oct 2025 18:02:54 +0200
+
 n4d-clientvars (0.12.1.23) jammy; urgency=medium
 
   * First jammy release 
